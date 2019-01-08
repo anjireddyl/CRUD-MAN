@@ -1,0 +1,63 @@
+<div class="container col-lg-3" style="float:left">
+    <h6>SENIOR COMP</h6>
+
+
+<form #fakeform="ngForm">
+USER ID:<input type="text" name="fuid" [(ngModel)]="pdata.userId" class="form-control" max="4"> <br />
+ID:<input type="text" name="fid" [(ngModel)]="pdata.id" class="form-control" max="4"> <br />
+Title: <input type="text" name="ftit" [(ngModel)]="pdata.title"  class="form-control" placeholder="type title here"> <br />
+Body: <input type="text" name="fbd" [(ngModel)]="pdata.body" class="form-control" placeholder="type body here"> <br />
+
+<button class="btn btn-primary" (click)="onSubmit()">SUBMIT</button>
+</form>
+
+
+</div>
+
+<div class="container col-lg-7">
+
+    <table border="1">
+        <thead>
+          <tr>
+              <th>ID</th>
+              <th style="width:70px;">USER ID</th>
+              <th>TITLE</th>
+              <th>BODY</th>
+          </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let data of Odata; let ind = index">
+            <td>{{data.id}}</td>
+            <td>{{data.userId}}</td>
+            <td>{{data.title}}</td>
+            <td>{{data.body}}</td>
+            <td><button class="btn btn-secondary" (click)="onEdit(ind)">EDIT</button></td>
+            <td><button class="btn btn-warning" (click)="onDelete(ind,data.id)">DELETE</button></td>
+        </tr>
+    </tbody>
+    </table>
+</div> 
+
+<div class="col-lg-4" *ngIf="editplease">
+    <table>
+        <tr>
+            <td>CATEGORY ID</td>
+            <td><input type="text" [(ngModel)]="category.id" name="ccna"></td>
+        </tr>
+        <tr>
+            <td>CATEGORY USERID</td>
+            <td><input type="text" [(ngModel)]="category.userId" name="ccid"></td>
+        </tr>
+        <tr>
+            <td>CATEGORY TITLE</td>
+            <td><input type="text"[(ngModel)]="category.title" name="cct"></td>
+        </tr>
+        <tr>
+            <td>CATEGORY BODY</td>
+            <td><input type="text" [(ngModel)]="category.body" name="ccb"></td>
+        </tr>
+        <tr>
+            <td><button class="btn btn-secondary" (click)="onUpdate()">UPDATE</button></td>
+        </tr>
+    </table>
+</div>
