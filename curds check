@@ -1,0 +1,94 @@
+export class SeniorComponent implements OnInit {
+
+  Odata:Fakerest[];
+
+ pdata:Fakerest;
+ editplease:boolean = false;
+ category:Fakerest;
+ updaIndex:number = 0;
+
+  constructor( private us:UsedService) { 
+    this.pdata = new Fakerest(null,null,null,null);
+    this.category = new Fakerest(null,null,null,null);
+  }
+
+
+
+
+  onSubmit(){
+    this.us.postdata(this.pdata)
+    .subscribe(
+      (response) =>{
+        this.Odata.push(new Fakerest(this.pdata.userId,this.pdata.id,this.pdata.title,this.pdata.body));
+        this.pdata.userId = null;
+        this.pdata.id = null;
+        this.pdata.title = null;
+        this.pdata.body = null;
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+ 
+
+  }
+
+
+
+
+  ngOnInit() {
+
+    this.us.getdetails()
+    .subscribe(
+      (response) => {
+        this.Odata = response;
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+
+  }
+
+ 
+  onDelete(index,id){
+    this.us.deletedata(id).subscribe(
+      (response) => {
+        this.Odata.splice(index,1)
+        console.log(`successfully deleted ${id}`)
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  
+  onEdit(index){
+   this.editplease = true;
+   this.category.userId = this.Odata[index].userId;
+   this.category.id = this.Odata[index].id;
+   this.category.title = this.Odata[index].title;
+   this.category.body = this.Odata[index].body;
+   this.updaIndex = index;
+  }
+
+  
+
+  onUpdate(){
+   this.us.putdata(this.category)
+   .subscribe(
+     (response) => {
+      this.editplease = false;
+      this.Odata[this.updaIndex].userId = this.category.userId;
+      this.Odata[this.updaIndex].id = this.category.id;
+      this.Odata[this.updaIndex].title = this.category.title;
+      this.Odata[this.updaIndex].body = this.category.body;
+     },
+     (error) => {
+       console.log(error)
+     }
+   )
+  }
+
+}
