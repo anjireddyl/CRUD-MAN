@@ -1,0 +1,33 @@
+export class UsedService {
+
+  constructor(private http:HttpClient) { 
+
+  }
+
+getdetails():Observable<Fakerest[]>{
+  return this.http.get<Fakerest[]>("https://jsonplaceholder.typicode.com/posts",{ responseType: "json"})
+  
+}
+
+
+getdetailsed(id:number):Observable<any>{
+  return this.http.get("https://jsonplaceholder.typicode.com/posts?id="+id,{ responseType: "json"})
+}
+
+
+
+postdata(c:Fakerest):Observable<string>{
+  return this.http.post("https://jsonplaceholder.typicode.com/posts",c,{ responseType: "text"});
+}
+
+
+deletedata(id:number):Observable<string>{
+  return this.http.delete("https://jsonplaceholder.typicode.com/posts/${id}",{ responseType: "text"})
+}
+
+
+putdata(c:Fakerest):Observable<string>{
+  return this.http.put("https://jsonplaceholder.typicode.com/posts/1",c,{ responseType: "text"})
+}
+
+}
